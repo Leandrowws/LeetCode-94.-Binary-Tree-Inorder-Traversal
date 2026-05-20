@@ -2,11 +2,28 @@
 #include <stdlib.h>
 
 struct TreeNode {
-      int val;
-      struct TreeNode *left;
-     struct TreeNode *right;
-};
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+ };
 
+struct TreeNode* Inserir(struct TreeNode *root, int num) {
+    if(root == NULL) {
+        struct TreeNode* aux = malloc(sizeof(struct TreeNode));
+        aux->val = num;
+        aux->left = NULL;               
+        aux->right = NULL;
+        return aux;
+    } else {
+        if(num < root->val) {
+            root->left = Inserir(root->left, num);
+        } else {
+            root->right = Inserir(root->right, num);
+        }
+        return root;
+    }
+} 
+ 
 int ContarNos(struct TreeNode *root) {
     if(root == NULL) {
         return 0;
@@ -31,9 +48,23 @@ int* inorderTraversal(struct TreeNode* root, int* returnSize) {
     return resultado;
 }
 
+
 int main() {
 
-    //o código funciona no leet, não fiz esse main, testei direto pelo leet!
+    struct TreeNode *arv = NULL;
+    int returnSize;
+
+    arv = Inserir(arv, 10);
+    arv = Inserir(arv, 6);
+    arv = Inserir(arv, 14);
+    arv = Inserir(arv, 8);
+    arv = Inserir(arv, 12);
+
+    int *vet = inorderTraversal(arv, &returnSize);
+
+    for(int i = 0; i < returnSize; i++) {
+        printf("%d ", vet[i]);
+    }
 
     return 0;
 }
